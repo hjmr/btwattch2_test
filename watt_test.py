@@ -2,13 +2,22 @@ import argparse
 import asyncio
 
 from utils import decode_data
+from data_handler import DataHandler
 
 from bleak import BleakClient
 
-CMD_HEADER = 0xaa
 
 CHAR_UART_RX = ("6e400002-b5a3-f393-e0a9-e50e24dcca9e")
 CHAR_UART_NOTIFY = ("6e400003-b5a3-f393-e0a9-e50e24dcca9e")
+
+
+class WattDataHandler(DataHander):
+    def process_data(self, data):
+        ret = decode_data(data)
+        print(ret)
+
+
+watt_handler = WattDataHandler()
 
 
 def parse_arg():
@@ -17,24 +26,8 @@ def parse_arg():
     return parser.parse_args()
 
 
-data_length = 0
-data_buffer = []
-
-
-def process_data(data):
-    for idx, x in enumerate(data):
-        if x == CMD_HEADER:
-            data_buffer.clear()
-            data_length = int.from_bytes(data[idx+1:idx+2], byteorder='big') + 3  # 3 for header
-        data_buffer.append(x)
-        if 0 < data_length and len(data_buffer) == data_length:
-            ret = decode_data(data_buffer)
-            print(ret)
-            data_buffer.clear()
-
-
 def notification_handler(sender, data):
-    process_data(data)
+    watt_handler.process_data(data)
 
 
 async def run(address):

@@ -32,8 +32,8 @@ def decode_data(buffer):
         i += l
 
     ret = {}
-    # ret['datetime'] = datetime(2000 + d['year'], d['month'], d['day'], d['hour'],
-    #                           d['minute'], d['second']).strftime('%Y-%m-%d %H:%M:%S')
+    ret['datetime'] = datetime(2000 + d['year'], d['month'], d['day'], d['hour'],
+                               d['minute'], d['second']).strftime('%Y-%m-%d %H:%M:%S')
     ret['V'] = d['voltage'] / 1000.0
     ret['mA'] = d['current'] / 128.0
     ret['W'] = d['power'] * 5.0 / 1000.0
