@@ -11,7 +11,7 @@ CHAR_UART_RX = ("6e400002-b5a3-f393-e0a9-e50e24dcca9e")
 CHAR_UART_NOTIFY = ("6e400003-b5a3-f393-e0a9-e50e24dcca9e")
 
 
-class WattDataHandler(DataHander):
+class WattDataHandler(DataHandler):
     def process_data(self, data):
         ret = decode_data(data)
         print(ret)
