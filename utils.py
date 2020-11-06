@@ -20,7 +20,7 @@ def decode_data(buffer):
     d = {}
     i = 0
     for k, l in field_lengths:
-        v = int.from_bytes(buffer[i:i+l], 'little')
+        v = int.from_bytes(buffer[i:i+l], byteorder='big')
         d[k] = v
         i += l
 
