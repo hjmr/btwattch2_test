@@ -22,7 +22,7 @@ async def run(address, svc_uuid, char_uuid):
         char_tx_power = await get_characteristic(svc, char_uuid)
 
         value = await client.read_gatt_char(char_tx_power)
-        print("Data: {} {}".format(int(value), value))
+        print("Data: {} ({}:{})".format(int(value[0]), value, type(value)))
 
 
 async def get_service(client, svc_uuid):

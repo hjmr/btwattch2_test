@@ -19,7 +19,7 @@ async def run(address):
         print("Connected: {0}".format(x))
 
         value = await client.read_gatt_char(CHAR_TX_POWER)
-        print("Data: {} {}".format(int(value), value))
+        print("Data: {} ({}:{})".format(int(value[0]), value, type(value)))
 
 
 if __name__ == "__main__":
