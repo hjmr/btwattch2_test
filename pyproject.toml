@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "btwattch2_test"
+version = "0.1.0"
+description = ""
+authors = ["hjmr <2620990+hjmr@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+bleak = "^0.9.1"
+
+[tool.poetry.dev-dependencies]
+pylint = "^2.6.0"
+autopep8 = "^1.5.4"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
