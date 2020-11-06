@@ -14,8 +14,8 @@ def decode_watt_data(buffer):
         # ('length', 2),
         ('command', 1),
         ('error_code', 1),
-        ('current', 6),
         ('voltage', 6),
+        ('current', 6),
         ('power', 6),
         ('second', 1),
         ('minute', 1),
@@ -34,9 +34,9 @@ def decode_watt_data(buffer):
     ret = {}
     ret['datetime'] = datetime(1900+d['year'], d['month']+1, d['day']+1,
                                d['hour'], d['minute'], d['second']).strftime('%Y-%m-%d %H:%M:%S')
-    ret['V'] = d['voltage'] / 1000.0
-    ret['mA'] = d['current'] / 128.0
-    ret['W'] = d['power'] * 5.0 / 1000.0
+    ret['V'] = d['voltage'] / 16 ** 6
+    ret['mA'] = d['current'] / 32 ** 6
+    ret['W'] = d['power'] / 16 ** 6
 
     return ret
 
