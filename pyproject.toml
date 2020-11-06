@@ -7,6 +7,7 @@ authors = ["hjmr <2620990+hjmr@users.noreply.github.com>"]
 [tool.poetry.dependencies]
 python = "^3.7"
 bleak = "^0.9.1"
+crcmod = "^1.7"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.6.0"
