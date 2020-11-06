@@ -16,7 +16,8 @@ def parse_arg():
 
 def notification_handler(sender, data):
     """Simple notification handler which prints the data received."""
-    print("[Notification] {0}: {1}".format(sender, data))
+    data_str = ' '.join(format(x, '02x') for x in data)
+    print("[Notification] {0}: {1}".format(sender, data_str))
 
 
 async def run(address):
