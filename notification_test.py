@@ -20,9 +20,8 @@ def notification_handler(sender, data):
     """Simple notification handler which prints the data received."""
     if len(data) == 20:
         ret = decode_data(data)
-        data_str = ('{},{:.2f},{:.2f},{:.2f}'.format(ret['datetime'], ret['V'], ret['mA'], ret['W']))
-    else:
-        data_str = ' '.join(format(x, '02x') for x in data)
+        print(ret)
+    data_str = ' '.join(format(x, '02x') for x in data)
     print("[Notification] {0}: {1}".format(sender, data_str))
 
 
