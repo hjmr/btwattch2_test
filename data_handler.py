@@ -15,10 +15,12 @@ class DataHandler(ABC):
         while idx < len(data):
             if data[idx] == CMD_HEADER:
                 self.data_buffer.clear()
-                self.data_length = int.from_bytes(data[idx+1:idx+3], byteorder='big') + 3  # 3 for header + length
+                self.data_length = int.from_bytes(data[idx+1:idx+3], byteorder='big')
                 idx += 3
+            else:
+                self.data_buffer.append(data[idx])
+                idx += 1
 
-            self.data_buffer.append(data[idx])
             if 0 < self.data_length and self.data_length <= len(self.data_buffer):
                 self._process_data(self.data_buffer)
                 self.data_buffer.clear()

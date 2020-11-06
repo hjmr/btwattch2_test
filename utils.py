@@ -10,8 +10,8 @@ def crc8(data):
 
 def decode_watt_data(buffer):
     field_lengths = (
-        ('header', 1),  # 0
-        ('length', 2),  # 1, 2
+        # ('header', 1),  # 0
+        # ('length', 2),  # 1, 2
         ('command', 1),  # 3
         ('error_code', 1),  # 4
         ('current', 6),  # 5, 6, 7
