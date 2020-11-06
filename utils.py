@@ -42,13 +42,13 @@ def decode_watt_data(buffer):
 
 
 def encode_datetime(year, month, day, hour, minute, second):
-    return bytearray([second, minute, hour, day, month-1, year-1900])
+    return bytearray([second, minute, hour, day-1, month-1, year-1900])
 
 
 if __name__ == "__main__":
-    command = bytearray([0xaa, 0x00, 0x08, 0x01])
-    encoded_dt = encode_datetime(2020, 9, 26, 1, 35, 00)
-    cmd = command + encoded_dt + bytes([5])
-    cmd += crc8(cmd)
+    command = bytearray([0xaa, 0x00, 0x08])
+    encoded_dt = bytes([1]) + encode_datetime(2020, 9, 27, 1, 35, 00) + bytes([5])
+    cmd = command + encoded_dt
+    cmd += crc8(encoded_dt)
     data_str = ' '.join(format(x, '02x') for x in cmd)
     print(data_str)

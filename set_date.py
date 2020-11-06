@@ -2,7 +2,7 @@ import argparse
 import asyncio
 from datetime import datetime
 
-from utils import encode_datetime
+from utils import encode_datetime, crc8
 
 from bleak import BleakClient
 
@@ -31,13 +31,15 @@ async def run(address):
 
         await client.start_notify(CHAR_UART_NOTIFY, notification_handler)
 
-        set_date_command = bytearray([0xaa, 0x00, 0x08, 0x01])
+        set_date_command = bytearray([0xaa, 0x00, 0x08])
+        start_data = bytes([0x01])
+        end_data = bytes([0x05])
 
         dt_now = datetime.now()
         encoded_now = encode_datetime(dt_now.year, dt_now.month, dt_now.day, dt_now.hour, dt_now.minute, dt_now.second)
+        data_body = start_data + encoded_now + end_data
 
-        # write_data = set_date_command + encoded_now
-        write_data = bytearray([0xaa, 0x00, 0x08, 0x01, 0x00, 0x23, 0x01, 0x1a, 0x08, 0x78, 0x05, 0x2f])
+        write_data = set_date_command + data_body + crc8(data_body)
 
         await client.write_gatt_char(CHAR_UART_RX, write_data)
         await asyncio.sleep(5.0)
