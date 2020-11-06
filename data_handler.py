@@ -11,19 +11,19 @@ class DataHandler(ABC):
         self.data_buffer = bytearray()
 
     def new_data(self, data):
-        for idx in range(len(data)):
+        idx = 0
+        while idx < len(data):
             if data[idx] == CMD_HEADER:
                 self.data_buffer.clear()
-                self.data_length = int.from_bytes(data[idx+1:idx+3], byteorder='big')
+                self.data_length = int.from_bytes(data[idx+1:idx+3], byteorder='big') + 3  # 3 for header + length
                 idx += 3
-            else:
-                self.data_buffer.append(data[idx])
 
+            self.data_buffer.append(data[idx])
             if 0 < self.data_length and self.data_length <= len(self.data_buffer):
-                self.process_data(self.data_buffer)
+                self._process_data(self.data_buffer)
                 self.data_buffer.clear()
                 self.data_length = 0
 
     @abstractmethod
-    def process_data(self, data):
+    def _process_data(self, data):
         pass

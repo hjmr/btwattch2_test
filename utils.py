@@ -8,7 +8,7 @@ def crc8(data):
     return crc8_func(data).to_bytes(1, 'big')
 
 
-def decode_data(buffer):
+def decode_watt_data(buffer):
     field_lengths = (
         ('header', 1),  # 0
         ('length', 2),  # 1, 2
