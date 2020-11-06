@@ -10,19 +10,19 @@ def crc8(data):
 
 def decode_watt_data(buffer):
     field_lengths = (
-        # ('header', 1),  # 0
-        # ('length', 2),  # 1, 2
-        ('command', 1),  # 3
-        ('error_code', 1),  # 4
-        ('current', 6),  # 5, 6, 7
-        ('voltage', 6),  # 8, 9, 10
-        ('power', 6),  # 11, 12, 13
-        ('second', 1),  # 14
-        ('minute', 1),  # 15
-        ('hour', 1),  # 16
-        ('day', 1),  # 17
-        ('month', 1),  # 18
-        ('year', 1)  # 19
+        # ('header', 1),
+        # ('length', 2),
+        ('command', 1),
+        ('error_code', 1),
+        ('current', 6),
+        ('voltage', 6),
+        ('power', 6),
+        ('second', 1),
+        ('minute', 1),
+        ('hour', 1),
+        ('day', 1),
+        ('month', 1),
+        ('year', 1)
     )
     d = {}
     i = 0
@@ -38,7 +38,7 @@ def decode_watt_data(buffer):
     ret['mA'] = d['current'] / 128.0
     ret['W'] = d['power'] * 5.0 / 1000.0
 
-    return d
+    return ret
 
 
 def encode_datetime(year, month, day, hour, minute, second):
