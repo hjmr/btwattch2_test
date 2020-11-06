@@ -17,6 +17,7 @@ def parse_arg():
     return parser.parse_args()
 
 
+data_length = 0
 data_buffer = []
 
 
@@ -26,7 +27,7 @@ def process_data(data):
             data_buffer.clear()
             data_length = int.from_bytes(data[idx+1:idx+2], byteorder='big') + 3  # 3 for header
         data_buffer.append(x)
-        if len(data_buffer) == data_length:
+        if 0 < data_length and len(data_buffer) == data_length:
             ret = decode_data(data_buffer)
             print(ret)
             data_buffer.clear()
