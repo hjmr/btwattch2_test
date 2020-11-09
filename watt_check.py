@@ -38,12 +38,12 @@ async def run(address, duration, interval):
         x = await client.is_connected()
         print("Connected: {0}".format(x))
 
+        write_value = bytearray([0xaa, 0x00, 0x01, 0x08, 0xb3])
         await client.start_notify(CHAR_UART_NOTIFY, notification_handler)
 
         start_time = time.time()
         while time.time() - start_time < duration:
             await asyncio.sleep(interval)
-            write_value = bytearray([0xaa, 0x00, 0x01, 0x08, 0xb3])
             await client.write_gatt_char(CHAR_UART_RX, write_value)
 
         await client.stop_notify(CHAR_UART_NOTIFY)
