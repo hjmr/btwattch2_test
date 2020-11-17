@@ -1,6 +1,7 @@
 import argparse
 import asyncio
 import time
+from datetime import datetime
 
 from utils import decode_watt_data
 from data_handler import DataHandler
@@ -13,8 +14,16 @@ CHAR_UART_NOTIFY = ("6e400003-b5a3-f393-e0a9-e50e24dcca9e")
 
 
 class WattDataHandler(DataHandler):
+    def __init__(self, use_server_time=False):
+        super(WattDataHandler, self).__init__()
+        self.use_server_time = use_server_time
+
     def _process_data(self, data):
         ret = decode_watt_data(data)
+        if self.use_server_time:
+            dt = datetime.now()
+            ret['datetime'] = datetime(dt.year, dt.month, dt.day,
+                                       dt.hour, dt.minute, dt.second).strftime('%Y-%m-%d %H:%M:%S')
         print(ret)
 
 
@@ -25,6 +34,8 @@ def parse_arg():
     parser = argparse.ArgumentParser(description="Test reading watt data.")
     parser.add_argument("-d", "--duration", type=float, default=5.0, help="A duration in sec. to check watt.")
     parser.add_argument("-i", "--interval", type=float, default=1.0, help="An interval in sec. to check watt.")
+    parser.add_argument("-s", "--use_server_time", action="store_true",
+                        help="Use date and time of the host computer when the option is given.")
     parser.add_argument("ADDRESS", type=str, help="A device address.")
     return parser.parse_args()
 
